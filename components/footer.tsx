@@ -1,12 +1,13 @@
-"use client"
+"use client";
 
-import { Linkedin, Instagram, Twitter } from "lucide-react"
-import { motion, useInView } from "framer-motion"
-import { useRef } from "react"
+import Image from "next/image";
+import { Linkedin, Instagram, Twitter } from "lucide-react";
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
 
 export function Footer() {
-  const footerRef = useRef<HTMLElement>(null)
-  const isInView = useInView(footerRef, { once: true, amount: 0.2 })
+  const footerRef = useRef<HTMLElement>(null);
+  const isInView = useInView(footerRef, { once: true, amount: 0.2 });
 
   const iconVariants = {
     hidden: { opacity: 0, scale: 0 },
@@ -20,10 +21,13 @@ export function Footer() {
         stiffness: 200,
       },
     }),
-  }
+  };
 
   return (
-    <footer ref={footerRef} className="relative border-t border-primary/10 py-12 px-4 sm:px-6 lg:px-8">
+    <footer
+      ref={footerRef}
+      className="relative border-t border-primary/10 py-12 px-4 sm:px-6 lg:px-8"
+    >
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -37,9 +41,13 @@ export function Footer() {
             animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
             transition={{ duration: 0.6, delay: 0.1 }}
           >
-            <h3 className="text-2xl font-bold mb-2 bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
-              Trazzos
-            </h3>
+            <Image
+              src="/logo.png"
+              alt="Trazzos"
+              width={160}
+              height={40}
+              className="h-6 w-auto mb-3"
+            />
             <p className="text-sm text-foreground/60">Cartagena, Colombia</p>
           </motion.div>
 
@@ -113,5 +121,5 @@ export function Footer() {
         </motion.div>
       </div>
     </footer>
-  )
+  );
 }

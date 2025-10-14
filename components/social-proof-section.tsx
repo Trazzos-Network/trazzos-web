@@ -91,9 +91,8 @@ export function SocialProofSection() {
               <div
                 className="w-full h-full"
                 style={{
-                  backgroundImage:
-                    "linear-gradient(rgba(154, 255, 141, 0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(154, 255, 141, 0.5) 1px, transparent 1px)",
-                  backgroundSize: "30px 30px",
+                  backgroundImage: "radial-gradient(rgba(154, 255, 141, 0.5) 1.5px, transparent 1.5px)",
+                  backgroundSize: "28px 28px",
                 }}
               />
             </motion.div>
