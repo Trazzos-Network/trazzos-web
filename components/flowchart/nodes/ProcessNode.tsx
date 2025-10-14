@@ -2,12 +2,13 @@
 
 import { memo } from "react";
 import { Handle, Position, type NodeProps } from "@xyflow/react";
-import { Workflow } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { FlowNodeData } from "../types";
 
-export const ProcessNode = memo(function ProcessNode({ data }: NodeProps) {
-  const nodeData = data as FlowNodeData;
+export const ProcessNode = memo(function ProcessNode({
+  data,
+}: NodeProps<FlowNodeData>) {
+  const nodeData = data ?? { label: "" };
   const isActive = Boolean(nodeData.isHighlighted || nodeData.isSelected);
   const animationPhases = [
     "fade-in-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards",
@@ -19,7 +20,7 @@ export const ProcessNode = memo(function ProcessNode({ data }: NodeProps) {
   return (
     <div
       className={cn(
-        "group relative flex min-w-[260px] max-w-[340px] flex-col gap-3 rounded-2xl border border-white/10 bg-card/70 px-7 py-6 text-left text-foreground shadow-lg backdrop-blur transition-all duration-300 ease-out opacity-0",
+        "group relative flex min-w-[260px] max-w-[340px] flex-col gap-4 rounded-2xl border border-white/10 bg-card/70 px-7 py-6 text-left text-foreground shadow-lg backdrop-blur transition-all duration-300 ease-out opacity-0",
         "hover:-translate-y-1 hover:border-primary/40 hover:shadow-[0_20px_45px_rgba(154,255,141,0.15)]",
         isActive && "border-primary/50 shadow-[0_0_35px_rgba(154,255,141,0.35)]"
       )}
@@ -29,15 +30,6 @@ export const ProcessNode = memo(function ProcessNode({ data }: NodeProps) {
       }}
     >
       <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-primary/10 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-
-      <div className="relative flex items-center gap-3 text-primary">
-        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/15 text-primary">
-          <Workflow className="h-5 w-5" />
-        </div>
-        <span className="text-sm font-semibold uppercase tracking-wide text-foreground/60">
-          Proceso
-        </span>
-      </div>
 
       <div className="relative space-y-2">
         <h3 className="text-xl font-semibold leading-snug text-balance">

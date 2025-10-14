@@ -24,12 +24,12 @@ interface RawEdge {
 interface NodeDescriptor {
   id: string;
   label: string;
+  description?: string;
   type: FlowNodeKind;
 }
 
 function normaliseLabel(label: string): string {
   let cleaned = label.trim();
-  // Strip surrounding quotes if present
   if (
     (cleaned.startsWith('"') && cleaned.endsWith('"')) ||
     (cleaned.startsWith("'") && cleaned.endsWith("'"))
@@ -37,6 +37,45 @@ function normaliseLabel(label: string): string {
     cleaned = cleaned.slice(1, -1);
   }
   return cleaned.replace(/\s+/g, " ").trim();
+}
+
+function extractLabelAndDescription(id: string, raw: string) {
+  const parts = raw
+    .split(/<br\s*\/?>/i)
+    .map((segment) => normaliseLabel(segment))
+    .filter(Boolean);
+
+  return {
+    label: parts[0] ?? id,
+    description: parts.slice(1).join(" ") || undefined,
+  };
+}
+
+function upsertDescriptor(
+  map: Map<string, NodeDescriptor>,
+  descriptor: NodeDescriptor
+) {
+  const existing = map.get(descriptor.id);
+  if (!existing) {
+    map.set(descriptor.id, descriptor);
+    return;
+  }
+
+  const label =
+    descriptor.label !== descriptor.id ? descriptor.label : existing.label;
+  const description = descriptor.description ?? existing.description;
+  const type =
+    existing.type === "action" && descriptor.type !== "action"
+      ? descriptor.type
+      : existing.type;
+
+  map.set(descriptor.id, {
+    ...existing,
+    ...descriptor,
+    label,
+    description,
+    type,
+  });
 }
 
 function parseNodeToken(token: string): NodeDescriptor {
@@ -61,22 +100,27 @@ function parseNodeToken(token: string): NodeDescriptor {
   const last = suffix[suffix.length - 1];
 
   if (first === "[" && last === "]") {
-    return { id, label: normaliseLabel(suffix.slice(1, -1)), type: "process" };
+    const content = extractLabelAndDescription(id, suffix.slice(1, -1));
+    return { id, ...content, type: "process" };
   }
 
   if (first === "{" && last === "}") {
-    return { id, label: normaliseLabel(suffix.slice(1, -1)), type: "decision" };
+    const content = extractLabelAndDescription(id, suffix.slice(1, -1));
+    return { id, ...content, type: "decision" };
   }
 
   if (suffix.startsWith("([") && suffix.endsWith("])")) {
-    return { id, label: normaliseLabel(suffix.slice(2, -2)), type: "startEnd" };
+    const content = extractLabelAndDescription(id, suffix.slice(2, -2));
+    return { id, ...content, type: "startEnd" };
   }
 
   if (first === "(" && last === ")") {
-    return { id, label: normaliseLabel(suffix.slice(1, -1)), type: "startEnd" };
+    const content = extractLabelAndDescription(id, suffix.slice(1, -1));
+    return { id, ...content, type: "startEnd" };
   }
 
-  return { id, label: normaliseLabel(suffix), type: "action" };
+  const content = extractLabelAndDescription(id, suffix);
+  return { id, ...content, type: "action" };
 }
 
 function convertToReactFlowNodes(
@@ -103,6 +147,7 @@ function convertToReactFlowNodes(
       position,
       data: {
         label: descriptor.label,
+        description: descriptor.description,
         isStart,
         isHighlighted: false,
         isSelected: false,
@@ -165,7 +210,7 @@ export function convertMermaidToReactFlow(
     if (!line.includes("-->")) {
       // standalone node declaration
       const descriptor = parseNodeToken(line);
-      nodeDescriptors.set(descriptor.id, descriptor);
+      upsertDescriptor(nodeDescriptors, descriptor);
       continue;
     }
 
@@ -175,7 +220,7 @@ export function convertMermaidToReactFlow(
     }
 
     const sourceDescriptor = parseNodeToken(rawSource);
-    nodeDescriptors.set(sourceDescriptor.id, sourceDescriptor);
+    upsertDescriptor(nodeDescriptors, sourceDescriptor);
 
     let targetToken = rawRest.trim();
     let edgeLabel: string | undefined;
@@ -187,7 +232,7 @@ export function convertMermaidToReactFlow(
     }
 
     const targetDescriptor = parseNodeToken(targetToken);
-    nodeDescriptors.set(targetDescriptor.id, targetDescriptor);
+    upsertDescriptor(nodeDescriptors, targetDescriptor);
 
     rawEdges.push({
       source: sourceDescriptor.id,

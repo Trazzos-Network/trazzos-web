@@ -2,12 +2,13 @@
 
 import { memo } from "react";
 import { Handle, Position, type NodeProps } from "@xyflow/react";
-import { GitBranch } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { FlowNodeData } from "../types";
 
-export const DecisionNode = memo(function DecisionNode({ data }: NodeProps) {
-  const nodeData = data as FlowNodeData;
+export const DecisionNode = memo(function DecisionNode({
+  data,
+}: NodeProps<FlowNodeData>) {
+  const nodeData = data ?? { label: "" };
   const isActive = Boolean(nodeData.isHighlighted || nodeData.isSelected);
   const animationPhases = [
     "fade-in-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards",
@@ -34,12 +35,12 @@ export const DecisionNode = memo(function DecisionNode({ data }: NodeProps) {
       >
         <div className="pointer-events-none absolute inset-0 rounded-3xl bg-gradient-to-br from-primary/20 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-80" />
         <div className="flex flex-col items-center gap-3 rotate-45">
-          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/15 text-primary">
-            <GitBranch className="h-6 w-6" />
-          </div>
           <h3 className="text-lg font-semibold leading-snug text-balance">
             {nodeData.label}
           </h3>
+          {nodeData.description ? (
+            <p className="text-xs text-foreground/60">{nodeData.description}</p>
+          ) : null}
         </div>
       </div>
 

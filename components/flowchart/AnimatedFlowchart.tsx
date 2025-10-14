@@ -44,10 +44,8 @@ function FlowchartCanvas({
 }: Pick<AnimatedFlowchartProps, "mermaidCode" | "showMiniMap">) {
   const { nodes, edges, highlightPath, resetHighlight, setFlowData } =
     useFlowchart();
-  const [reactFlowInstance, setReactFlowInstance] = useState<ReactFlowInstance<
-    Node,
-    any
-  > | null>(null);
+  const [reactFlowInstance, setReactFlowInstance] =
+    useState<ReactFlowInstance | null>(null);
 
   useEffect(() => {
     if (!mermaidCode.trim()) {
@@ -82,7 +80,7 @@ function FlowchartCanvas({
     resetHighlight();
   }, [resetHighlight]);
 
-  const handleInit = useCallback((instance: ReactFlowInstance<Node, any>) => {
+  const handleInit = useCallback((instance: ReactFlowInstance) => {
     setReactFlowInstance(instance);
     instance.fitView({ padding: 0.25, duration: 600 });
   }, []);
@@ -96,9 +94,9 @@ function FlowchartCanvas({
       onNodeClick={handleNodeClick}
       onPaneClick={handlePaneClick}
       onInit={handleInit}
-      panOnScroll
+      // panOnScroll
       panOnDrag
-      zoomOnScroll
+      // zoomOnScroll
       zoomOnPinch
       fitView
       fitViewOptions={{ padding: 0.25 }}
@@ -114,13 +112,13 @@ function FlowchartCanvas({
         gap={28}
         size={1.4}
         color="rgba(255,255,255,0.08)"
-        className="bg-gray-950"
+        style={{ backgroundColor: "#131313" }}
       />
-      <Controls
+      {/* <Controls
         className="!bg-gray-900/80 !border-white/10 !text-white"
         position="bottom-right"
         showInteractive={false}
-      />
+      /> */}
       {showMiniMap ? (
         <MiniMap
           className="!bg-gray-900/70 !border-white/10"
@@ -143,9 +141,10 @@ export const AnimatedFlowchart = memo(function AnimatedFlowchart({
   return (
     <div
       className={cn(
-        "relative h-full w-full overflow-hidden rounded-3xl border border-white/10 bg-gray-950/90 shadow-[0_25px_70px_rgba(0,0,0,0.45)]",
+        "relative h-full w-full overflow-hidden rounded-3xl border border-white/10 shadow-[0_25px_70px_rgba(0,0,0,0.45)]",
         className
       )}
+      style={{ backgroundColor: "#131313" }}
     >
       <ReactFlowProvider>
         <FlowchartCanvas mermaidCode={mermaidCode} showMiniMap={showMiniMap} />

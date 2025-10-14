@@ -137,7 +137,6 @@ export function HeroSection() {
           }}
         />
       </motion.div>
-      <ClientsSection />
     </section>
   );
 }

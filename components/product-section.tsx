@@ -93,21 +93,11 @@ export function ProductSection() {
           </p>
         </motion.div>
 
-        {/* <motion.img
-          src="/tripode-trazzos.svg"
-          alt="Tripod"
-          width={1000}
-          height={1000}
-          className="w-full h-auto"
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          transition={{ duration: 0.6 }}
-        /> */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="h-[600px] w-full"
+          className="h-[800px] w-full"
         >
           <FlowchartProvider>
             <AnimatedFlowchart
