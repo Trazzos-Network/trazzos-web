@@ -38,7 +38,7 @@ export function TechMarquee() {
     <div className="relative border-y border-white/10 bg-[#131313] py-12">
       <div className="mx-auto max-w-5xl px-6 text-center">
         <p className="text-sm uppercase tracking-[0.3em] text-primary/70">
-          Our Preferred Stack
+          Nuestra stack tecnológica
         </p>
         <h3 className="mt-3 text-3xl font-semibold text-foreground/90">
           Tecnología aliada en la que confiamos para construir Trazzos
