@@ -1,31 +1,51 @@
 "use client";
 
+import Image from "next/image";
 import { Card } from "@/components/ui/card";
-import { Briefcase, Lightbulb, Code } from "lucide-react";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 
 const team = [
   {
-    name: "Luis Carmona",
-    role: "Director Financiero",
+    name: "Luis Ángel Carmona Tache",
+    role: "Director Financiero – KMA Construcciones S.A.S.",
     description:
-      "Experto en Fintech y Project Finance con más de 10 años de experiencia estructurando proyectos por +$50 billones COP.",
-    icon: Briefcase,
+      "+10 años en estructuración financiera y gestión de riesgos en proyectos de infraestructura. Magíster en Proyectos de Inversión, especialista en Finanzas y máster en Fintech e Innovación Financiera (EADA – Barcelona). Experiencia en project finance (+$50 billones COP) e innovación financiera con enfoque en blockchain y tokenización.",
+    image: "/team/1.png",
+    keywords: [
+      "Project finance",
+      "Tokenización",
+      "Gestión de riesgo",
+      "Legal Tech",
+    ],
   },
   {
-    name: "Jennifer Salazar",
-    role: "CEO",
+    name: "Jennifer Salazar Duke",
+    role: "CEO – Salazar Duke Impact Hub",
     description:
-      "Líder en transformación digital, combina impacto social, datos e innovación para rediseñar realidades.",
-    icon: Lightbulb,
+      "Administradora de Negocios Internacionales y Especialista en Finanzas y Proyectos. CDEO (Chief Data & Digital Transformation Officer) con experiencia en machine learning, innovación digital e impacto social. 6 años como traductora y paralegal en casos de extradición, integrando gestión financiera, tecnología y compromiso social para liderar procesos de transformación.",
+    image: "/team/2.png",
+    keywords: [
+      "Innovación digital",
+      "Impacto social",
+      "Machine learning",
+      "Agentic Flows",
+    ],
   },
   {
     name: "Fito Segrera",
-    role: "CTO",
+    role: "Desarrollador Full-Stack & Emprendedor Tecnológico",
     description:
-      "Emprendedor global y desarrollador full-stack, especializado en tokenización, IoT y blockchain con propósito.",
-    icon: Code,
+      "Becario Fulbright y MFA in Design & Technology (Parsons, NY). Fundador de CAC Lab (Shanghái) y líder en Blazar Labs, donde impulsa tokenización, trazabilidad, IoT y dApps con impacto social. Especialista en Cardano, Ethereum/Polygon y stack full-stack/IoT, aporta al equipo ejecución técnica sólida y visión estratégica para transformar industrias con tecnología disruptiva.",
+    image: "/team/3.png",
+    keywords: [
+      "Fullstack Senior Developer",
+      "Blockchain",
+      "IoT",
+      "dApps",
+      " Ai / Agents",
+      "Cardano",
+    ],
   },
 ];
 
@@ -41,14 +61,14 @@ const containerVariants = {
 };
 
 const cardVariants = {
-  hidden: { opacity: 0, y: 60, rotateX: -15 },
+  hidden: { opacity: 0, y: 60, scale: 0.95 },
   visible: {
     opacity: 1,
     y: 0,
-    rotateX: 0,
+    scale: 1,
     transition: {
       duration: 0.7,
-      ease: [0.0, 0.0, 0.2, 1.0] as const,
+      ease: [0.2, 0.8, 0.2, 1] as const,
     },
   },
 };
@@ -79,50 +99,59 @@ export function TeamSection() {
           variants={containerVariants}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
-          className="grid grid-cols-1 md:grid-cols-3 gap-8"
+          className="grid grid-cols-1 gap-10 md:grid-cols-3"
         >
-          {team.map((member, index) => {
-            const Icon = member.icon;
+          {team.map((member, index) => (
+            <motion.article key={member.name} variants={cardVariants}>
+              <motion.div
+                className="group h-full"
+                whileHover={{ y: -10, scale: 1.01 }}
+                transition={{ type: "spring", stiffness: 260, damping: 24 }}
+              >
+                <Card className="relative flex h-full flex-col overflow-hidden border-white/10 bg-card/70 p-8 backdrop-blur">
+                  <motion.div
+                    className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+                    aria-hidden
+                  />
 
-            return (
-              <motion.div key={index} variants={cardVariants}>
-                <motion.div
-                  whileHover={{ y: -8, scale: 1.02 }}
-                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                >
-                  <Card className="group relative p-8 bg-card/50 backdrop-blur-sm border-primary/10 hover:border-primary/30 transition-all duration-500 h-full">
-                    <motion.div
-                      className="absolute inset-0 rounded-lg bg-gradient-to-b from-primary/0 to-primary/5 opacity-0 group-hover:opacity-100"
-                      transition={{ duration: 0.5 }}
+                  <div className="relative rounded-full mb-6 overflow-hidden border border-white/10 bg-black/40">
+                    <Image
+                      src={member.image}
+                      alt={member.name}
+                      width={640}
+                      height={720}
+                      className="h-80 rounded-full w-full object-cover transition duration-500 group-hover:scale-[1.03]"
                     />
+                  </div>
 
-                    <div className="relative">
-                      <motion.div
-                        whileHover={{ rotate: 360, scale: 1.1 }}
-                        transition={{ duration: 0.6 }}
-                        className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-6"
-                      >
-                        <Icon className="w-6 h-6 text-primary" />
-                      </motion.div>
-
-                      <h3 className="text-2xl font-bold mb-1">{member.name}</h3>
-
-                      <p className="text-primary font-semibold mb-4">
+                  <div className="relative space-y-3">
+                    <div className="space-y-1">
+                      <h3 className="text-2xl font-semibold text-foreground">
+                        {member.name}
+                      </h3>
+                      {/* <p className="text-sm font-semibold uppercase tracking-wide text-primary">
                         {member.role}
-                      </p>
-
-                      <p className="text-foreground/60 leading-relaxed text-sm">
-                        {member.description}
+                      </p> */}
+                      <p className="text-sm capitalize tracking-[0.1em] text-primary/80">
+                        {member.keywords.join(" • ")}
                       </p>
                     </div>
 
-                    {/* Decorative corner */}
-                    <div className="absolute bottom-0 left-0 w-16 h-16 border-b border-l border-primary/20 rounded-bl-lg group-hover:border-primary/40 transition-colors duration-300" />
-                  </Card>
-                </motion.div>
+                    <p className="text-sm leading-relaxed text-foreground/70">
+                      {member.description}
+                    </p>
+                  </div>
+
+                  <div className="mt-auto pt-6">
+                    <div className="flex items-center gap-2 text-xs uppercase tracking-[0.3em] text-foreground/40">
+                      <span className="inline-flex h-2 w-2 rounded-full bg-primary/70" />
+                      <span>Trazzos Leadership</span>
+                    </div>
+                  </div>
+                </Card>
               </motion.div>
-            );
-          })}
+            </motion.article>
+          ))}
         </motion.div>
       </div>
     </section>

@@ -5,10 +5,8 @@ import { Handle, Position, type NodeProps } from "@xyflow/react";
 import { cn } from "@/lib/utils";
 import type { FlowNodeData } from "../types";
 
-export const ProcessNode = memo(function ProcessNode({
-  data,
-}: NodeProps<FlowNodeData>) {
-  const nodeData = data ?? { label: "" };
+export const ProcessNode = memo(function ProcessNode({ data }: NodeProps) {
+  const nodeData = (data as FlowNodeData) ?? { label: "" };
   const isActive = Boolean(nodeData.isHighlighted || nodeData.isSelected);
   const animationPhases = [
     "fade-in-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards",

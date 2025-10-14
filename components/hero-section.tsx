@@ -114,28 +114,6 @@ export function HeroSection() {
             Conoce más
           </Button>
         </motion.div>
-
-        <motion.div
-          style={{ y: useTransform(scrollYProgress, [0, 1], ["0%", "100%"]) }}
-          className="absolute top-1/4 right-10 w-32 h-32 border border-primary/20 rounded-lg rotate-12"
-          animate={{ rotate: [12, 24, 12] }}
-          transition={{
-            duration: 8,
-            repeat: Number.POSITIVE_INFINITY,
-            ease: "easeInOut",
-          }}
-        />
-        <motion.div
-          style={{ y: useTransform(scrollYProgress, [0, 1], ["0%", "80%"]) }}
-          className="absolute bottom-1/4 left-10 w-24 h-24 border border-primary/20 rounded-full"
-          animate={{ scale: [1, 1.1, 1] }}
-          transition={{
-            duration: 6,
-            repeat: Number.POSITIVE_INFINITY,
-            ease: "easeInOut",
-            delay: 1,
-          }}
-        />
       </motion.div>
     </section>
   );

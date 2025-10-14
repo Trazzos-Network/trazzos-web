@@ -7,8 +7,8 @@ import type { FlowNodeData } from "../types";
 
 export const ActionNode = memo(function ActionNode({
   data,
-}: NodeProps<FlowNodeData>) {
-  const nodeData = data ?? { label: "" };
+}: NodeProps) {
+  const nodeData = (data as FlowNodeData) ?? { label: "" };
   const isActive = Boolean(nodeData.isHighlighted || nodeData.isSelected);
   const animationPhases = [
     "fade-in-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards",

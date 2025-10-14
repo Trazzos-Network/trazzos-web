@@ -9,6 +9,8 @@ import {
   ReactFlow,
   ReactFlowProvider,
   type Node,
+  type NodeTypes,
+  type EdgeTypes,
   type ReactFlowInstance,
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
@@ -32,11 +34,11 @@ const nodeTypes = {
   process: ProcessNode,
   decision: DecisionNode,
   action: ActionNode,
-};
+} as NodeTypes;
 
 const edgeTypes = {
   "animated-edge": AnimatedEdge,
-};
+} as EdgeTypes;
 
 function FlowchartCanvas({
   mermaidCode,
