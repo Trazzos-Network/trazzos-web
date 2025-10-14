@@ -4,6 +4,8 @@ import { Card } from "@/components/ui/card";
 import { Bot, Globe, BarChart3 } from "lucide-react";
 import { motion, useScroll, useTransform, useInView } from "framer-motion";
 import { useRef } from "react";
+import { AnimatedFlowchart } from "./flowchart/AnimatedFlowchart";
+import { FlowchartProvider } from "./flowchart/FlowchartContext";
 
 const tripodElements = [
   {
@@ -25,6 +27,27 @@ const tripodElements = [
       "Brinda confianza verificable a consumidores y aliados mostrando cada paso del ciclo de vida del activo.",
   },
 ];
+
+const tripodMermaidCode = `
+graph LR
+  node_KnJEmIsu[Mundo Real<br/>Productos, procesos, comunidades]
+  node_BXLH5AqM[🤖 Automatización + IOT]
+  node_g7NOycjy[🪙 Tokenización Blockchain]
+  node__8KYHUxw[📊 Trazabilidad Digital]
+  node_ACrDmzSt[⚡ Eficiencia Operativa]
+  node_Lt_9rjjr[💰 Nuevas Economías]
+  node_n7ULOd3_[✅ Confianza Verificable]
+  node_Mm0EAWMs[🎯 Impacto Trazzos]
+  node_KnJEmIsu --> node_BXLH5AqM
+  node_KnJEmIsu --> node_g7NOycjy
+  node_KnJEmIsu --> node__8KYHUxw
+  node_BXLH5AqM --> node_ACrDmzSt
+  node_g7NOycjy --> node_Lt_9rjjr
+  node__8KYHUxw --> node_n7ULOd3_
+  node_ACrDmzSt --> node_Mm0EAWMs
+  node_Lt_9rjjr --> node_Mm0EAWMs
+  node_n7ULOd3_ --> node_Mm0EAWMs
+`;
 
 export function ProductSection() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -70,7 +93,7 @@ export function ProductSection() {
           </p>
         </motion.div>
 
-        <motion.img
+        {/* <motion.img
           src="/tripode-trazzos.svg"
           alt="Tripod"
           width={1000}
@@ -79,9 +102,21 @@ export function ProductSection() {
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           transition={{ duration: 0.6 }}
-        />
-
+        /> */}
         <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="h-[600px] w-full"
+        >
+          <FlowchartProvider>
+            <AnimatedFlowchart
+              mermaidCode={tripodMermaidCode}
+              showMiniMap={false}
+            />
+          </FlowchartProvider>
+        </motion.div>
+        {/* <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={
             isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }
@@ -101,7 +136,7 @@ export function ProductSection() {
               <span className="text-foreground font-bold">Impacto Trazzos</span>
             </p>
           </div>
-        </motion.div>
+        </motion.div> */}
       </div>
     </section>
   );

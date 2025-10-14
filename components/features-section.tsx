@@ -1,15 +1,16 @@
-"use client"
+"use client";
 
-import { Card } from "@/components/ui/card"
-import { Search, Cog, Coins } from "lucide-react"
-import { motion, useInView } from "framer-motion"
-import { useRef } from "react"
+import { Card } from "@/components/ui/card";
+import { Search, Cog, Coins } from "lucide-react";
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
 
 const features = [
   {
     icon: Search,
     title: "Trazabilidad verificada",
-    description: "Transparencia total sobre el origen y recorrido de productos físicos.",
+    description:
+      "Transparencia total sobre el origen y recorrido de productos físicos.",
   },
   {
     icon: Cog,
@@ -19,9 +20,10 @@ const features = [
   {
     icon: Coins,
     title: "Tokenización con propósito",
-    description: "Convierte productos únicos en activos digitales con valor global.",
+    description:
+      "Convierte productos únicos en activos digitales con valor global.",
   },
-]
+];
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -32,7 +34,7 @@ const containerVariants = {
       delayChildren: 0.1,
     },
   },
-}
+};
 
 const cardVariants = {
   hidden: { opacity: 0, y: 50, scale: 0.9 },
@@ -42,14 +44,14 @@ const cardVariants = {
     scale: 1,
     transition: {
       duration: 0.6,
-      ease: "easeOut",
+      ease: [0.0, 0.0, 0.2, 1.0] as const,
     },
   },
-}
+};
 
 export function FeaturesSection() {
-  const sectionRef = useRef<HTMLElement>(null)
-  const isInView = useInView(sectionRef, { once: true, amount: 0.2 })
+  const sectionRef = useRef<HTMLElement>(null);
+  const isInView = useInView(sectionRef, { once: true, amount: 0.2 });
 
   return (
     <section ref={sectionRef} className="relative py-32 px-4 sm:px-6 lg:px-8">
@@ -60,7 +62,9 @@ export function FeaturesSection() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 text-balance">Beneficios clave</h2>
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 text-balance">
+            Beneficios clave
+          </h2>
           <p className="text-lg text-foreground/60 max-w-2xl mx-auto text-balance">
             Construye confianza y eficiencia en cada paso de tu cadena de valor
           </p>
@@ -73,7 +77,7 @@ export function FeaturesSection() {
           className="grid grid-cols-1 md:grid-cols-3 gap-6"
         >
           {features.map((feature, index) => {
-            const Icon = feature.icon
+            const Icon = feature.icon;
 
             return (
               <motion.div key={index} variants={cardVariants}>
@@ -100,17 +104,19 @@ export function FeaturesSection() {
                       {feature.title}
                     </h3>
 
-                    <p className="text-foreground/60 leading-relaxed">{feature.description}</p>
+                    <p className="text-foreground/60 leading-relaxed">
+                      {feature.description}
+                    </p>
                   </div>
 
                   {/* Corner accent */}
                   <div className="absolute top-0 right-0 w-20 h-20 border-t border-r border-primary/20 rounded-tr-lg group-hover:border-primary/40 transition-colors duration-300" />
                 </Card>
               </motion.div>
-            )
+            );
           })}
         </motion.div>
       </div>
     </section>
-  )
+  );
 }

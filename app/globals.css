@@ -133,6 +133,25 @@
   }
 }
 
+@keyframes flow {
+  0% {
+    stroke-dashoffset: 24;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 20px rgba(154, 255, 141, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(154, 255, 141, 0.8);
+  }
+}
+
 .animate-glow {
   animation: glow-pulse 3s ease-in-out infinite;
 }

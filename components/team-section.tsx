@@ -1,9 +1,9 @@
-"use client"
+"use client";
 
-import { Card } from "@/components/ui/card"
-import { Briefcase, Lightbulb, Code } from "lucide-react"
-import { motion, useInView } from "framer-motion"
-import { useRef } from "react"
+import { Card } from "@/components/ui/card";
+import { Briefcase, Lightbulb, Code } from "lucide-react";
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
 
 const team = [
   {
@@ -27,7 +27,7 @@ const team = [
       "Emprendedor global y desarrollador full-stack, especializado en tokenización, IoT y blockchain con propósito.",
     icon: Code,
   },
-]
+];
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -38,7 +38,7 @@ const containerVariants = {
       delayChildren: 0.2,
     },
   },
-}
+};
 
 const cardVariants = {
   hidden: { opacity: 0, y: 60, rotateX: -15 },
@@ -48,14 +48,14 @@ const cardVariants = {
     rotateX: 0,
     transition: {
       duration: 0.7,
-      ease: "easeOut",
+      ease: [0.0, 0.0, 0.2, 1.0] as const,
     },
   },
-}
+};
 
 export function TeamSection() {
-  const sectionRef = useRef<HTMLElement>(null)
-  const isInView = useInView(sectionRef, { once: true, amount: 0.2 })
+  const sectionRef = useRef<HTMLElement>(null);
+  const isInView = useInView(sectionRef, { once: true, amount: 0.2 });
 
   return (
     <section ref={sectionRef} className="relative py-32 px-4 sm:px-6 lg:px-8">
@@ -66,9 +66,12 @@ export function TeamSection() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 text-balance">Nuestro equipo</h2>
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 text-balance">
+            Nuestro equipo
+          </h2>
           <p className="text-lg text-foreground/60 max-w-2xl mx-auto text-balance">
-            Expertos en tecnología, finanzas e innovación trabajando para transformar industrias
+            Expertos en tecnología, finanzas e innovación trabajando para
+            transformar industrias
           </p>
         </motion.div>
 
@@ -79,7 +82,7 @@ export function TeamSection() {
           className="grid grid-cols-1 md:grid-cols-3 gap-8"
         >
           {team.map((member, index) => {
-            const Icon = member.icon
+            const Icon = member.icon;
 
             return (
               <motion.div key={index} variants={cardVariants}>
@@ -104,9 +107,13 @@ export function TeamSection() {
 
                       <h3 className="text-2xl font-bold mb-1">{member.name}</h3>
 
-                      <p className="text-primary font-semibold mb-4">{member.role}</p>
+                      <p className="text-primary font-semibold mb-4">
+                        {member.role}
+                      </p>
 
-                      <p className="text-foreground/60 leading-relaxed text-sm">{member.description}</p>
+                      <p className="text-foreground/60 leading-relaxed text-sm">
+                        {member.description}
+                      </p>
                     </div>
 
                     {/* Decorative corner */}
@@ -114,10 +121,10 @@ export function TeamSection() {
                   </Card>
                 </motion.div>
               </motion.div>
-            )
+            );
           })}
         </motion.div>
       </div>
     </section>
-  )
+  );
 }
